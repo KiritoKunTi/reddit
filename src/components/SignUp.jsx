@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { UserAuth } from "../context/AuthContext";
+
 import GoogleButton from "./GoogleButton";
 import { GrClose } from "react-icons/gr";
 import HOR from "./HOR";
 
 const style = {
   overlay: `absolute top-0 left-0 w-screen h-screen`,
+  form: ``,
   closeBtn: `absolute top-6 right-6`,
-  button: `bg-[#d93a00] text-white font-medium text-[20px] py-3 rounded-full hover:bg-[#d82a00]`,
+  button: `bg-[#d93a00] text-white font-medium text-[20px] py-3 w-full rounded-full hover:bg-[#d82a00]`,
   container: `absolute bg-white w-[500px] h-[83vh] rounded-3xl p-20 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] `,
   popup: `flex flex-col justify-center w-full h-full`,
   heading: `text-2xl font-medium mb-2`,
@@ -16,7 +19,20 @@ const style = {
 };
 
 const SignUp = ({ show, close }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   if (!show) return null;
+
+  const { user, signUp } = UserAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signUp(email, password);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <div onClick={close} className={style.overlay}>
@@ -49,8 +65,21 @@ const SignUp = ({ show, close }) => {
 
           <GoogleButton onClick={null} />
           <HOR />
-          <input className={style.emailInput} placeholder="Email" />
-          <button className={style.button}>Continue</button>
+          <form onSubmit={handleSubmit} className={style.form}>
+            <input
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              className={style.emailInput}
+              placeholder="Email"
+            />
+            <input
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              className={style.emailInput}
+              placeholder="Password"
+            />
+            <button className={style.button}>Continue</button>
+          </form>
           <p className="mt-5">
             Already a redditor?{" "}
             <span className="text-blue-600 underline-offset-1">Log In</span>
