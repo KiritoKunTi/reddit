@@ -12,7 +12,7 @@ const style = {
 };
 
 const Header = () => {
-  const [signShown, setSignShown] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
   const [logShown, setLogShown] = useState(false);
 
   return (
@@ -20,14 +20,14 @@ const Header = () => {
       <img className={style.logo} src={Logo} alt="reddit" />
       <div className={style.block}>
         <button
-          onClick={() => setSignShown(!signShown)}
+          onClick={() => setShowSignUp(true)}
           className={`${style.button} ${style.singUp}`}
         >
           Sign Up
         </button>
         <button className={`${style.button} ${style.logIn}`}>Log In</button>
       </div>
-      {signShown ? <SignUp /> : null}
+      <SignUp show={showSignUp} close={() => setShowSignUp(false)} />
     </div>
   );
 };
