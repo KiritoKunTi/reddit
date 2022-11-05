@@ -22,16 +22,17 @@ const style = {
 const LogIn = ({ show, close, toSignup }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   if (!show) return null;
 
-  const { user, signUp } = UserAuth();
+  const { user, logIn } = UserAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signUp(email, password);
-    } catch (error) {
-      console.log(error.message);
+      await logIn(email, password);
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -87,6 +88,7 @@ const LogIn = ({ show, close, toSignup }) => {
               Sign Up
             </p>
           </p>
+          <p className="bg-red-300">{error}</p>
         </div>
       </div>
     </div>

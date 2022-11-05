@@ -22,6 +22,8 @@ const style = {
 const SignUp = ({ show, close, toLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   if (!show) return null;
 
   const { user, signUp } = UserAuth();
@@ -30,8 +32,8 @@ const SignUp = ({ show, close, toLogin }) => {
     e.preventDefault();
     try {
       await signUp(email, password);
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -87,6 +89,7 @@ const SignUp = ({ show, close, toLogin }) => {
               Log In
             </p>
           </p>
+          <p>{error}</p>
         </div>
       </div>
     </div>
