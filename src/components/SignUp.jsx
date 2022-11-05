@@ -32,6 +32,7 @@ const SignUp = ({ show, close, toLogin }) => {
     e.preventDefault();
     try {
       await signUp(email, password);
+      close();
     } catch (err) {
       setError(err.message);
     }
