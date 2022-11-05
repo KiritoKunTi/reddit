@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../assets/reddit-logo-new.svg";
+import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 
 const style = {
@@ -25,9 +26,29 @@ const Header = () => {
         >
           Sign Up
         </button>
-        <button className={`${style.button} ${style.logIn}`}>Log In</button>
+        <button
+          onClick={() => setLogShown(true)}
+          className={`${style.button} ${style.logIn}`}
+        >
+          Log In
+        </button>
       </div>
-      <SignUp show={showSignUp} close={() => setShowSignUp(false)} />
+      <SignUp
+        show={showSignUp}
+        close={() => setShowSignUp(false)}
+        toLogin={() => {
+          setLogShown(true);
+          setShowSignUp(false);
+        }}
+      />
+      <LogIn
+        show={logShown}
+        close={() => setLogShown(false)}
+        toSignup={() => {
+          setShowSignUp(true);
+          setLogShown(false);
+        }}
+      />
     </div>
   );
 };

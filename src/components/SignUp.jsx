@@ -16,9 +16,10 @@ const style = {
   subtitle: `mb-12`,
   link: `text-blue-700`,
   emailInput: `px-5 py-4 border hover:border-gray-400 rounded-full text-lg font-medium bg-gray-100 mb-6 active:border-blue-700 outline-none`,
+  switch: `text-blue-600 underline underline-offset-1 inline cursor-pointer font-bold ml-1`,
 };
 
-const SignUp = ({ show, close }) => {
+const SignUp = ({ show, close, toLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   if (!show) return null;
@@ -82,7 +83,9 @@ const SignUp = ({ show, close }) => {
           </form>
           <p className="mt-5">
             Already a redditor?{" "}
-            <span className="text-blue-600 underline-offset-1">Log In</span>
+            <p onClick={toLogin} className={style.switch}>
+              Log In
+            </p>
           </p>
         </div>
       </div>
