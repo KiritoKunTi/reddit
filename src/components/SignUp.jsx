@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { UserAuth } from "../context/AuthContext";
+import validator from "validator";
 
 import GoogleButton from "./GoogleButton";
 import { GrClose } from "react-icons/gr";
@@ -30,12 +31,14 @@ const SignUp = ({ show, close, toLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     try {
       await signUp(email, password);
-      close();
     } catch (err) {
-      setError(err.message);
+      setError(err);
+      console.log("catching error");
     }
+    console.log("error");
   };
 
   return (
@@ -72,7 +75,17 @@ const SignUp = ({ show, close, toLogin }) => {
           <form onSubmit={handleSubmit} className={style.form}>
             <input
               type="email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                var email = e.target.value;
+                setEmail(e.target.value);
+
+                // if (validator.isEmail(email)) {
+                //   setEmail(e.target.value);
+                //   setError("");
+                // } else {
+                //   setError("Enter valid Email!");
+                // }
+              }}
               className={style.emailInput}
               placeholder="Email"
             />
@@ -90,7 +103,11 @@ const SignUp = ({ show, close, toLogin }) => {
               Log In
             </p>
           </p>
-          <p>{error}</p>
+          {error ? (
+            <p className="p-4 w-full bg-red-400 mt-3 rounded text-red-900">
+              {error}
+            </p>
+          ) : null}
         </div>
       </div>
     </div>
