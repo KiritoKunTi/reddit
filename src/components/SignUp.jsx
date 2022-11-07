@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import validator from "validator";
+import { Link } from "react-router-dom";
 
 import GoogleButton from "./GoogleButton";
-import { GrClose } from "react-icons/gr";
 import HOR from "./HOR";
 
 const style = {
@@ -20,12 +20,10 @@ const style = {
   switch: `text-blue-600 underline underline-offset-1 inline cursor-pointer font-bold ml-1`,
 };
 
-const SignUp = ({ show, close, toLogin }) => {
+const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  if (!show) return null;
 
   const { user, signUp } = UserAuth();
 
@@ -42,14 +40,8 @@ const SignUp = ({ show, close, toLogin }) => {
   };
 
   return (
-    <div onClick={close} className={style.overlay}>
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className={style.container}
-      >
-        <GrClose size={20} className={style.closeBtn} onClick={close} />
+    <div className={style.overlay}>
+      <div className={style.container}>
         <div className={style.popup}>
           <h2 className={style.heading}>Sign Up</h2>
           <p className={style.subtitle}>
@@ -98,10 +90,7 @@ const SignUp = ({ show, close, toLogin }) => {
             <button className={style.button}>Continue</button>
           </form>
           <p className="mt-5">
-            Already a redditor?{" "}
-            <p onClick={toLogin} className={style.switch}>
-              Log In
-            </p>
+            Already a redditor? <p className={style.switch}>Log In</p>
           </p>
           {error ? (
             <p className="p-4 w-full bg-red-400 mt-3 rounded text-red-900">

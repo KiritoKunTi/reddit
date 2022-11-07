@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 
 import GoogleButton from "./GoogleButton";
-import { GrClose } from "react-icons/gr";
 import HOR from "./HOR";
 
 const style = {
@@ -19,11 +18,10 @@ const style = {
   switch: `text-blue-600 underline underline-offset-1 inline cursor-pointer font-bold ml-1`,
 };
 
-const LogIn = ({ show, close, toSignup }) => {
+const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  if (!show) return null;
 
   const { user, logIn } = UserAuth();
 
@@ -31,21 +29,14 @@ const LogIn = ({ show, close, toSignup }) => {
     e.preventDefault();
     try {
       await logIn(email, password);
-      close();
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div onClick={close} className={style.overlay}>
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className={style.container}
-      >
-        <GrClose size={20} className={style.closeBtn} onClick={close} />
+    <div className={style.overlay}>
+      <div className={style.container}>
         <div className={style.popup}>
           <h2 className={style.heading}>Log In</h2>
           <p className={style.subtitle}>
@@ -84,10 +75,7 @@ const LogIn = ({ show, close, toSignup }) => {
             <button className={style.button}>Log In</button>
           </form>
           <p className="mt-5">
-            New to Reddit?{" "}
-            <p onClick={toSignup} className={style.switch}>
-              Sign Up
-            </p>
+            New to Reddit? <p className={style.switch}>Sign Up</p>
           </p>
           <p className="bg-red-300">{error}</p>
         </div>
