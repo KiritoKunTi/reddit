@@ -2,22 +2,24 @@ import React, { useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import validator from "validator";
 import { Link } from "react-router-dom";
+import LeftSideImage from "../assets/leftSide.png";
 
 import GoogleButton from "./GoogleButton";
 import HOR from "./HOR";
 
 const style = {
-  overlay: `absolute top-0 left-0 w-screen h-screen`,
+  overlay: `w-screen h-screen bg-white flex box-border`,
+  leftSide: `max-w-[200px] h-full`,
+  leftImage: `h-full object-cover object-left`,
   form: ``,
-  closeBtn: `absolute top-6 right-6`,
-  button: `bg-[#d93a00] text-white font-medium text-[20px] py-3 w-full rounded-full hover:bg-[#d82a00]`,
-  container: `absolute bg-white w-[500px] h-[83vh] rounded-3xl p-20 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] `,
-  popup: `flex flex-col justify-center w-full h-full`,
+  container: `bg-white w-full h-full h-[83vh]`,
+  popup: `flex flex-col justify-center h-full w-[400px] p-8`,
   heading: `text-2xl font-medium mb-2`,
   subtitle: `mb-12`,
   link: `text-blue-700`,
-  emailInput: `px-5 py-4 border hover:border-gray-400 rounded-full text-lg font-medium bg-gray-100 mb-6 active:border-blue-700 outline-none`,
-  switch: `text-blue-600 underline underline-offset-1 inline cursor-pointer font-bold ml-1`,
+  emailInput: `border hover:border-gray-400 rounded text-sm font-bold p-4 w-full mb-6 active:border-blue-700 outline-none`,
+  button: `bg-blue-600 text-white font-medium text-[20px] rounded hover:bg-blue-500 w-full p-2`,
+  switch: `text-blue-600 underline underline-offset-1 inline cursor-pointer font-bold`,
 };
 
 const SignUp = () => {
@@ -41,6 +43,10 @@ const SignUp = () => {
 
   return (
     <div className={style.overlay}>
+      <div className={style.leftSide}>
+        <img className={style.leftImage} src={LeftSideImage} alt="" />
+      </div>
+
       <div className={style.container}>
         <div className={style.popup}>
           <h2 className={style.heading}>Sign Up</h2>
@@ -79,19 +85,21 @@ const SignUp = () => {
                 // }
               }}
               className={style.emailInput}
-              placeholder="Email"
+              placeholder="EMAIL"
             />
             <input
               type="password"
               onChange={(e) => setPassword(e.target.value)}
               className={style.emailInput}
-              placeholder="Password"
+              placeholder="PASSWORD"
             />
             <button className={style.button}>Continue</button>
           </form>
-          <p className="mt-5">
-            Already a redditor? <p className={style.switch}>Log In</p>
-          </p>
+          <Link to="/login">
+            <p className="mt-5">
+              Already a redditor? <p className={style.switch}>Log In</p>
+            </p>
+          </Link>
           {error ? (
             <p className="p-4 w-full bg-red-400 mt-3 rounded text-red-900">
               {error}

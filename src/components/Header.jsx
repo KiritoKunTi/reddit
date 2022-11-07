@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Logo from "../assets/reddit-logo-new.svg";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
+import { Link } from "react-router-dom";
+
 import { UserAuth } from "../context/AuthContext";
 import { SlLogout } from "react-icons/sl";
 import { GiRamProfile } from "react-icons/gi";
@@ -21,9 +23,6 @@ const style = {
 };
 
 const Header = () => {
-  const [showSignUp, setShowSignUp] = useState(false);
-  const [logShown, setLogShown] = useState(false);
-
   const { user, logOut } = UserAuth();
 
   console.log(user);
@@ -34,18 +33,16 @@ const Header = () => {
       <div className={style.block}>
         {!user ? (
           <div>
-            <button
-              onClick={() => setShowSignUp(true)}
-              className={`${style.button} ${style.singUp}`}
-            >
-              Sign Up
-            </button>
-            <button
-              onClick={() => setLogShown(true)}
-              className={`${style.button} ${style.logIn}`}
-            >
-              Log In
-            </button>
+            <Link to="/signup">
+              <button className={`${style.button} ${style.singUp}`}>
+                Sign Up
+              </button>
+            </Link>
+            <Link to="/login">
+              <button className={`${style.button} ${style.logIn}`}>
+                Log In
+              </button>
+            </Link>
           </div>
         ) : (
           <div className={style.dropdown}>
@@ -66,22 +63,6 @@ const Header = () => {
           </div>
         )}
       </div>
-      <SignUp
-        show={showSignUp}
-        close={() => setShowSignUp(false)}
-        toLogin={() => {
-          setLogShown(true);
-          setShowSignUp(false);
-        }}
-      />
-      <LogIn
-        show={logShown}
-        close={() => setLogShown(false)}
-        toSignup={() => {
-          setShowSignUp(true);
-          setLogShown(false);
-        }}
-      />
     </div>
   );
 };
